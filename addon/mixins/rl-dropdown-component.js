@@ -41,6 +41,7 @@ export default Ember.Mixin.create({
     let $document = Ember.$(document);
 
     if (this.get('dropdownExpanded')) {
+      this.sendAction('dropdownOpened');
 
       /* Add clickout handler with 1ms delay, to allow opening the dropdown
        * by clicking e.g. a checkbox and binding to dropdownExpanded, without
@@ -54,6 +55,8 @@ export default Ember.Mixin.create({
         $document.bind(escapeEventName, {component: component}, component.boundEscapeHandler);
       }
     } else {
+      this.sendAction('dropdownClosed');
+
       $document.unbind(clickEventName, component.boundClickoutHandler);
       $document.unbind(touchEventName, component.boundClickoutHandler);
       $document.unbind(escapeEventName, component.boundEscapeHandler);
